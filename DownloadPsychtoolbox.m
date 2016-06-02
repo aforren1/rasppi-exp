@@ -300,83 +300,10 @@ function DownloadPsychtoolbox(targetdirectory, flavor, targetRevision)
 % work if Screen et al. are still loaded.
 clear mex
 
-% Check if this is 32-Bit Matlab on Windows or Linux, which we don't support anymore:
-if (strcmp(computer, 'PCWIN') || strcmp(computer, 'GLNX86')) && (nargin < 2 || isempty(strfind(flavor, 'Psychtoolbox-3.0.')))
-    fprintf('Psychtoolbox 3.0.12 and later do no longer work with 32-Bit versions of Matlab.\n');
-    fprintf('You need to upgrade to a supported 64-Bit version of Octave or Matlab. 32-Bit Octave is still\n');
-    fprintf('supported on GNU/Linux.\n');
-    fprintf('If you must use a legacy 32-Bit Matlab environment, you can call this function\n');
-    fprintf('DownloadPsychtoolbox() with flavor ''Psychtoolbox-3.0.11'', which does support 32-Bit Matlab on Linux and Windows.\n');
-    error('Tried to setup on 32-Bit Matlab, which is no longer supported.');
-end
-
-% Check if this is 32-Bit Octave on OSX, which we don't support anymore:
-if ~isempty(strfind(computer, 'apple-darwin')) && isempty(strfind(computer, '64'))
-    fprintf('Psychtoolbox 3.0.11 and later do no longer work with 32-Bit versions of Octave or Matlab on OSX.\n');
-    fprintf('You need to upgrade to a 64-Bit version of Octave or Matlab on OSX, which is fully supported.\n');
-    fprintf('You can also use the alternate download function DownloadLegacyPsychtoolbox() to download\n');
-    fprintf('an old legacy copy of Psychtoolbox-3.0.9, which did support 32-Bit Octave 3.2 on OSX, or use\n');
-    fprintf('DownloadPsychtoolbox() with flavor ''Psychtoolbox-3.0.10'', which does support 32-Bit Matlab on OSX.\n');
-    error('Tried to setup on 32-Bit Octave, which is no longer supported on OSX.');
-end
-
-% Check if this is Octave-3 on Windows, which we don't support at all:
-if strcmp(computer, 'i686-pc-mingw32')
-    fprintf('Psychtoolbox 3.0.10 and later does no longer work with GNU/Octave-3 on MS-Windows.\n');
-    fprintf('You need to use 32-Bit Octave-4 if you want to use Psychtoolbox with Octave on Windows.\n');
-    fprintf('You can also use the alternate download function DownloadLegacyPsychtoolbox() to download\n');
-    fprintf('an old legacy copy of Psychtoolbox-3.0.9 which did support 32-Bit Octave 3.2 on Windows.\n');
-    error('Tried to setup on Octave, which is no longer supported on MS-Windows.');
-end
-
-if strcmp(computer,'MAC')
-    fprintf('This version of Psychtoolbox is no longer supported under MacOSX on the Apple PowerPC hardware platform.\n');
-    fprintf('You can get modern versions of Psychtoolbox-3 for Linux if you choose to install GNU/Linux on your PowerPC\n');
-    fprintf('machine. These are available from the GNU/Debian project and a future Ubuntu 12.10 release\n.');
-    fprintf('Alternatively you can download old - totally unsupported - releases of Psychtoolbox version 3.0.9\n');
-    fprintf('from GoogleCode by use of the alternate download function DownloadLegacyPsychtoolbox().\n\n');
-    error('Apple MacOSX on Apple PowerPC computers is no longer supported by this Psychtoolbox version.');
-end
-
 % Check OS
 IsWin = ~isempty(strfind(computer, 'PCWIN')) || ~isempty(strfind(computer, '-w64-mingw32'));
 IsOSX = ~isempty(strfind(computer, 'MAC')) || ~isempty(strfind(computer, 'apple-darwin'));
 IsLinux = strcmp(computer,'GLNX86') || strcmp(computer,'GLNXA64') || ~isempty(strfind(computer, 'linux-gnu'));
-
-if ~IsWin && ~IsOSX && ~IsLinux
-    os = computer;
-    if strcmp(os,'MAC2')
-        os = 'Mac OS9';
-    end
-    fprintf('Sorry, this updater doesn''t support your operating system: %s.\n', os);
-    fprintf([mfilename ' can only install the new (OSX, Linux and Windows) \n'...
-        'OpenGL-based versions of the Psychtoolbox-3. To install the older (OS9 and Windows) \n'...
-        'versions (not based on OpenGL, aka PTB-2) please go to the legacy Psychtoolbox website: \n'...
-        'web http://psychtoolbox.org/PTB-2/index.html\n']);
-    error(['Your operating system is not supported by ' mfilename '.']);
-end
-
-% Check if this is a Matlab of version prior to V 7.4 aka R2007a:
-v = ver('matlab');
-if ~isempty(v) && ~isempty(v(1).Version)
-    v = v(1).Version; v = sscanf(v, '%i.%i.%i');
-    if (v(1) < 7) || ((v(1) == 7) && (v(2) < 4))
-        % Matlab version < 7.4 detected. This is no longer
-        % supported by current PTB beta. Redirect to the last
-        % functional PTB for such ancient Matlab's:
-        fprintf('\n\n\n\n');
-        fprintf('Psychtoolbox 3.0.10 and later are no longer available for your version of Matlab.\n');
-        fprintf('Current versions only work on Matlab Version 7.4 (R2007a) or later.\n');
-        fprintf('Please consider upgrading to a recent Matlab version or switching to GNU/Octave 3.2.x.\n');
-        fprintf('Both will provide better support, performance and a richer feature set.\n\n');
-        fprintf('\n\n');
-        fprintf('If you insist on use of an older Matlab version, use our alternate installer function\n\n');
-        fprintf('DownloadLegacyPsychtoolbox() \n\n');
-        fprintf('... which will allow you to retrieve a legacy version of Psychtoolbox 3.0.9 or earlier.\n');
-        fprintf('In this case you are entirely on your own, as such versions are not supported in any way.\n\n');
-        error('This Downloader does not support Matlab versions before V7.4 (R2007a) anymore.');
-    end
-end
 
 if nargin < 1
     targetdirectory = [];
@@ -428,55 +355,6 @@ end
 if length(flavor) < 10
     % One of the short flavor spec strings: lowercase'em:
     flavor = lower(flavor);
-end
-
-switch (flavor)
-    % 'current' is a synonym for 'beta'.
-    case 'beta'
-    case 'current'
-        flavor = 'beta';
-    case 'stable'
-        fprintf('\n\n\nYou request download of the "stable" flavor of Psychtoolbox.\n');
-        fprintf('The "stable" flavor is no longer available, it has been renamed to "unsupported".\n');
-        fprintf('If you really want to use the former "stable" flavor, please retry the download\n');
-        fprintf('under the new name "unsupported".\n\n');
-        error('Flavor "stable" requested. This is no longer available.');
-    case 'unsupported'
-        % Very bad choice! Give user a chance to reconsider...
-        fprintf('\n\n\nYou request download of the "unsupported" flavor of Psychtoolbox.\n');
-        fprintf('Use of the "unsupported" flavor is strongly discouraged! It is outdated and contains\n');
-        fprintf('many bugs and deficiencies that have been fixed in the recommended "beta" flavor years ago.\n');
-        fprintf('"unsupported" is no longer maintained and you will not get any support if you have problems with it.\n');
-        fprintf('Please choose "beta" unless you have very good reasons not to do so.\n\n');
-        fprintf('If you answer "no" to the following question, i will download the recommended "beta" flavor instead.\n');
-        answer=input('Do you want to continue download of "unsupported" flavor despite the warnings (yes or no)? ','s');
-        if ~strcmpi(answer,'yes') && ~strcmpi(answer,'y')
-            flavor = 'beta';
-            fprintf('Download of "unsupported" flavor cancelled, will download recommended "beta" flavor instead...\n');
-        else
-            fprintf('Download of "unsupported" flavor proceeds. You are in for quite a bit of pain...\n');
-        end
-
-        fprintf('\n\nPress any key to continue...\n');
-        pause;
-
-        if ~strcmp(flavor, 'beta')
-            fprintf('\n\n\n\n');
-            fprintf('Psychtoolbox 3.0.10 and later do no longer provide the "unsupported" flavor.\n');
-            fprintf('If you insist on use of the "unsupported" flavor, go to our GoogleCode site ...\n\n');
-            fprintf('http://code.google.com/p/psychtoolbox-3/ \n\n');
-            fprintf('... and get yourself an older version of DownloadPsychtoolbox.m which will allow you\n');
-            fprintf('to retrieve such a legacy version of Psychtoolbox 3.0.9 or earlier. In that case,\n');
-            fprintf('you are entirely on your own, as such versions are not supported in any way.\n\n');
-            error('This Downloader does not support the "unsupported" aka "stable" flavor anymore.');
-        end
-        
-    otherwise
-        fprintf('\n\n\nHmm, requested flavor is the unusual flavor: %s\n',flavor);
-        fprintf('Either you request something exotic, or you made a typo?\n');
-        fprintf('We will see. If you get an error, this might be the first thing to check.\n');
-        fprintf('Press any key to continue...\n');
-        pause;
 end
 
 fprintf('DownloadPsychtoolbox(''%s'',''%s'',''%s'')\n',targetdirectory, flavor, targetRevision);

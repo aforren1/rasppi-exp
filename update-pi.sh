@@ -19,3 +19,6 @@ make
 sudo make install
 cd ..
 
+# get a modified version that won't ask permission
+wget https://raw.githubusercontent.com/aforren1/rasppi-exp/master/DownloadPsychtoolbox.m
+
