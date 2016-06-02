@@ -1,306 +1,12 @@
-function DownloadPsychtoolbox
-% DownloadPsychtoolbox([targetdirectory][, flavor][, targetRevision])
+function ModifiedDownloadPsychtoolbox
+% ModifiedDownloadPsychtoolbox
 %
-% This script downloads the latest GNU/Linux, Mac OSX, or MS-Windows
-% Psychtoolbox-3, version 3.0.10 or later, from our git-server to your
-% disk, creating your working copy, ready to use as a new toolbox in your
-% MATLAB/OCTAVE application. Subject to your permission, any old
-% installation of the Psychtoolbox is first removed. It's a careful
-% program, checking for all required resources and privileges before it
-% starts.
-%
-% Note: If you use a Debian derived Linux distribution, e.g., Debian or
-% Ubuntu, consider installing the package octave-psychtoolbox-3 or
-% matlab-psychtoolbox-3 instead from http://neuro.debian.net - This is more
-% convenient and will provide you with automatic updates.
-%
-% CAUTION: Psychtoolbox 3.0.12 will not work anymore with 32-Bit Matlab, or
-% with OSX versions earlier than 10.8 "Mountain Lion". Psychtoolbox may
-% work with versions of Microsoft Windows older than Windows-7, but it is
-% not tested or supported on such ancient Windows systems anymore, so use
-% at your own risk.
-%
-% Psychtoolbox 3.0.11 *will not work* with GNU/Octave on MS-Windows, or
-% with 32-Bit Octave on OSX, as support for these setups has been cancelled
-% for the 3.0.10 series. It will also not work with 32-Bit Matlab on OSX,
-% or with OSX versions earlier than 10.6.8 "Snow Leopard", unless you
-% choose the unsupported legacy flavor "Psychtoolbox-3.0.10" via the
-% optional 'flavor' parameter.
-%
-% If you want to download older versions of Psychtoolbox than 3.0.10, e.g.,
-% version 3.0.9, use the DownloadLegacyPsychtoolbox() function instead of
-% this function.
-%
-% On Mac OSX, all parameters are optional. On MS-Windows and GNU/Linux, the
-% first parameter "targetdirectory" with the path to the installation
-% target directory is required. The "targetdirectory" name may not contain
-% any white space, otherwise download will fail with mysterious error
-% messages!
-% 
-% On OSX, your working copy of the Psychtoolbox will be placed in either
-% your /Applications or your /Users/Shared folder (depending on permissions
-% and your preference), or you may specify a 'targetdirectory', as you
-% prefer.
-%
-% On Microsoft Windows, you must specify the full path, including
-% the drive name where Psychtoolbox should be installed, e.g.,
-% 'C:\MyToolboxes\'.
-%
-% The desired flavor of a Psychtoolbox release can be selected via the
-% optional "flavor" parameter: By default, 'beta' (aka 'current') will be
-% installed if you don't specify otherwise, as this is almost always the
-% best possible choice. You may be able to download an old versioned
-% release via a namestring like 'Psychtoolbox-x.y.z', e.g.,
-% 'Psychtoolbox-3.0.7' if you'd want to download version 3.0.7. This is
-% only useful if you run a very old operating system or Matlab version that
-% isn't supported by the current "beta" anymore, so you'd need to stick
-% with an old versioned release.
-%
-% Normally your download should just work(TM). Very infrequently, the
-% download servers may be overloaded or down for maintenance, resulting in
-% download failure. In that case, please retry a few hours later.
-%
-%
-% The "targetRevision" argument is optional and should be normally omitted.
-% Normal behaviour is to download the latest revision of Psychtoolbox. If
-% you provide a specific targetRevision, then this script will install a
-% copy of Psychtoolbox according to the specified revision.
-%
-% This is only useful if you experience problems and want to revert to an
-% earlier known-to-be-good release.
-%
-% Revisions can be specified by a revision number or by the special flag
-% 'PREV' which will choose the revision before the most current one.
-%
-%
-% INSTALLATION INSTRUCTIONS: The Wiki contains much more up to date
-% instructions. If in doubt, follow instructions on the Wiki!
-%
-% 1. If you don't already have it, you must install the Subversion client.
-% For Mac OSX 10.6 and later, download the latest Mac OSX Subversion client
-% from: http://www.wandisco.com/subversion/download#osx
-% If you have the XCode command line tools installed, you won't need to
-% install subversion as it is included in these tools.
-% 
-% For Windows, download the Windows Subversion client from one of these:
-%
-% http://subversion.apache.org/packages.html#windows
-% http://www.wandisco.com/subversion/download#windows
-%
-% Install the Subversion client on your machine by double-clicking the
-% installer and following the instructions. After installation of the
-% Subversion client, you will need to exit and restart Matlab or Octave, so
-% it can find the new subversion executable. In many cases it may be
-% neccessary to even reboot your computer after installation of subversion.
-% Btw. you should avoid to install the client into a path that contains
-% blanks/spaces/white-space as this can lead to download failures in some
-% cases, e.g., 'C:\Program Files\...' may be bad because there is a blank
-% between the "Program" and "Files".
-%
-% Alternatively, if you don't have the neccessary permissions to install
-% Subversion into a system folder, you can install Subversion into an
-% arbitrary folder on your system (excluding ones with blanks in their
-% path) and then add that folder to your Matlab or Octave path. E.g. you
-% installed into D:\MyOwnFolder\Subversion\ . Then you can do this:
-% addpath('D:\MyOwnFolder\Subversion\'). Our installer should find the
-% client then.
-%
-% For Linux, just install the subversion package from your package
-% management tool.
-%
-%
-% 2. On MacOS/X, to install the Psychtoolbox in the default location
-% (/Applications or, failing that, /Users/Shared). Just type:
-%
-% DownloadPsychtoolbox
-%
-% Our standard option is in the Applications folder, but note that, as with
-% installation of any software, you'll need administrator privileges. Also
-% note that if you put the toolbox in the Applications folder, you'll need
-% to reinstall it when MATLAB / OCTAVE is updated on your machine. If you
-% must install without access to an administrator, we offer the option of
-% installing into the /Users/Shared/ folder instead. If you must install
-% the Psychtoolbox in some other folder, then specify it in the optional
-% first argument of your call.
-%
-% On Windows or Linux, provide a pathname, e.g.:
-% DownloadPsychtoolbox('C:\MyToolboxes\');
-%
-% That's it. Any pre-existing installation of the Psychtoolbox will be
-% removed (if you approve). The program will then download the latest
-% Psychtoolbox and update your MATLAB / OCTAVE path and other relevant
-% system settings.
-%
-% Enjoy! If you're new to this, you might start by typing "help
-% Psychtoolbox".
-%
-% P.S. If you get stuck, first check the FAQ section and Download section
-% of our Wiki at http://www.psychtoolbox.org. If that doesn't help, post
-% your question to the forum by email or web:
-%
-% web mailto:psychtoolbox@yahoogroups.com
-% web http://groups.yahoo.com/group/psychtoolbox/messages/
-% web http://groups.yahoo.com/group/psychtoolbox/post/
-%
-% Please specify your full name and the version of your operating system,
-% MATLAB / OCTAVE, and psychtoolbox.
-%
-% UPGRADE INSTRUCTIONS:
-%
-% To upgrade your copy of Psychtoolbox, at any time, to incorporate the
-% latest bug fixes, enhancements, and new features, just type:
-% UpdatePsychtoolbox
-% 
-% UpdatePsychtoolbox cannot change the flavor of your Psychtoolbox. To
-% change the flavor, run DownloadPsychtoolbox to completely discard your
-% old installation and get a fresh copy with the requested flavor.
-% 
-% PERMISSIONS:
-%
-% There's a thorny issue with permissions on OS/X. It may not be possible
-% to install into /Applications (or whatever the targetdirectory is) with
-% the user's existing privileges. The normal situation on Mac OSX is that a
-% few users have "administrator" privileges, and many don't. By default,
-% writing to the /Applications folder requires administrator privileges.
-%
-% DownloadPsychtoolbox creates the Psychtoolbox folder with permissions set
-% to allow writing by everyone. Our hope is that this will allow updating
-% (by UpdatePsychtoolbox) without need for administrator privileges.
-%
-% Some labs that may want to be able to install without access to an
-% administrator. For them we offer the fall back of installing Psychtoolbox
-% in /Users/Shared/, instead of /Applications/, because, by default,
-% /Users/Shared/ is writeable by all users.
-%
-% SAVEPATH
-%
-% Normally all users of MATLAB / OCTAVE use the same path. This path is
-% normally saved in MATLABROOT/toolbox/local/pathdef.m, where "MATLABROOT"
-% stands for the result returned by running that function in MATLAB, e.g.
-% '/Applications/MATLAB.app/Contents/Matlab14.1'. Since pathdef.m is inside
-% the MATLAB package, which is normally in the Applications folder,
-% ordinary users (not administrators) cannot write to pathdef.m. They'll
-% get an error message whenever they try to save the path, e.g. by typing
-% "savepath". Most users will find this an unacceptable limitation. The
-% solution is very simple, ask an administrator to use File Get Info to set
-% the pathdef.m file permissions to allow write by everyone. This needs to
-% be done only once, after installing MATLAB.
-%
-% web http://www.mathworks.com/access/helpdesk/help/techdoc/matlab_env/ws_pat18.html
-%
-%
+% This is a shorter version of DownloadPsychtoolbox, with options pre-selected.
 
-% History:
-%
-% 11/02/05 mk  Created.
-% 11/25/05 mk  Bug fix for 'targetdirectory' provided by David Fencsik.
-% 01/13/06 mk  Added support for download of Windows OpenGL-PTB.
-% 03/10/06 dgp Expanded the help text, above, incorporating suggestions
-%              from Daniel Shima.
-% 03/11/06 dgp Check OS. Remove old Psychtoolbox from path and from disk.
-%              After downloading, add new Psychtoolbox to path.
-% 03/12/06 dgp Polished error message regarding missing svn.
-% 03/13/06 dgp Changed default targetdirectory from PWD to ~/Documents/.
-% 03/14/06 dgp Changed default targetdirectory to /Applications/, and
-%              if not sufficiently privileged, then /Users/Shared/.
-%              Check privilege to create folder. Check SAVEPATH.
-% 06/05/06 mk  On Windows, we require the user to pass the full path to
-%              the installation folder, because there is no well-defined
-%              equivalent to the Mac OS X /Applications/ folder. Also, the order
-%              of operations was changed to maximize the chance of getting a
-%              working PTB installation despite minor failures of commands
-%              like savepath, or fileattrib. We allow the user to decide
-%              whether to delete her old Psychtoolbox folders or to
-%              retain multiple copies of Psychtoolbox (e.g., beta and stable)
-%              so each user can choose between Beta and Stable.
-%              We no longer copy UpdatePsychtoolbox.m, since it's included in the 
-%              new Psychtoolbox folder 
-% 06/06/06 dgp Cosmetic editing of comments, above.
-% 06/27/06 dgp Cosmetic editing of comments and messages. Check for spaces
-%              in targetdirectory name.
-% 9/23/06  mk  Add clear mex call to flush mex files before downloading.
-% 10/5/06  mk  Add detection code for MacOS-X on Intel Macs.
-% 10/28/06 dhb Allow 'current' as a synonym for 'beta'.
-% 11/21/06 mk  Allow alternate install location for svn client: Installer
-%              will find the svn executable if its installation folder is
-%              included in the Matlab path.
-% 02/17/07 mk  Convert flavor spec to lower case in case it isn't.
-% 03/15/07 mk  Detection code for Windows 64 bit added.
-% 07/18/07 mk  Changed default for flavor from 'stable' to 'beta'.
-% 09/27/07 mk  Add another fallback path: Download via https protocol to
-%              maybe bypass proxy-servers.
-% 10/29/07 mk  Small fix for Kerstin Preuschoffs bugreport: Download of old
-%              versions didn't work anymore, becuase 'flavor' string was
-%              lower-cased.
-% 11/17/07 mk  Prioritized https:// checkout over http:// checkout --> More
-%              likely to bypass proxy servers and succeed.
-% 12/25/07 mk  Add check for white spaces in path to subversion client - Output warning, if so.
-% 12/25/07 mk  Add optional 'downloadmethod' parameter, which allows to
-%              select initial choie of download protocol to use, in order to allow to
-%              bypass misconfigured proxies and firewalls. Problem reported
-%              by Patrick Mineault.
-% 01/08/08 mk  On OS/X, add an additional search path for 'svn': /usr/bin/
-%              as per suggestion of Donald Kalar. Presumably, Apples Leopard ships
-%              with a svn client preinstalled in that location.
-%
-% 05/07/08 mk  Add better handling of default values. Add 'targetRevision'
-%              parameter as option, just as in UpdatePsychtoolbox.m
-%
-% 06/16/08 mk  Change default initial download protcol from svn: to https:,
-%              as Berlios seems to have disabled svnserve protocol :-(
-%
-% 10/01/08 mk  Add interactive output/query for svn client on the Unices.
-%              This to work-around questions of the client about accepting
-%              security certificates...
-% 01/05/09 mk  Remove && or || to make old Matlab versions happier.
-% 01/05/09 mk  Remove && or || to make old Matlab versions happier.
-% 01/05/09 mk  Change order of call arguments to make choice of default
-%              'beta' flavor more convenient and choice of 'stable'
-%              inconvenient. Also add some additional warning text and
-%              dialog to tell user how bad 'stable' is and to give him a
-%              chance to reconsider.
-% 03/22/09 mk  Update help text again. Rename 'stable' into 'unsupported'.
-% 05/31/09 mk  Add support for Octave-3.
-% 10/05/09 mk  Strip trailing fileseperator from targetDirectory, as
-%              suggested by Erik Flister to avoid trouble with new svn
-%              clients.
-% 12/27/10 mk  Redirect 'beta' downloads on Matlab versions < 6.5 to the
-%              special "Psychtoolbox-3.0.8-PreMatlab6.5" compatibility
-%              version - The last one to support pre 6.5 Matlab's.
-%
-% 10/31/11 mk  Change location of SVN repository to
-%              http://psychtoolbox-3.googlecode.com/svn/
-%              our new home, now that Berlios is shutting down.
-%
-% 05/27/12 mk  - Strip backwards compatibility support to Matlab pre-R2007a.
-%              - Remove PowerPC support.
-%              - Strip support for 'stable' / 'unsupported' flavors et al.
-%              - Change location of SVN repository to our SVN frontend for GIT:
-%                https://github.com/Psychtoolbox-3/Psychtoolbox-3
-%
-% 05/28/12 mk  Fix disasterous bug: Answering anything but 'y' to the
-%              question if old PTB folder should be deleted, caused
-%              *deletion* of the folder! Oh dear! This bug present since
-%              late 2011.
-%
-% 09/14/12 mk  Drop support for Octave on MS-Windows.
-% 09/14/12 mk  Drop support for 32-Bit Octave on OSX.
-% 03/10/13 mk  Add additional svn search-pathes matching UpdatePsychtoolbox et al.
-%              Also update download URL for OSX Suversion client.
-% 07/02/13 mk  Drop support for 32-Bit Matlab on OSX, and thereby for 32-Bit OSX.
-% 07/02/13 mk  Reenable write access for all to Psychtoolbox folder.
-% 07/23/13 mk  Do not prevent execution on 32-Bit Matlab on OSX!
-% 05/18/14 mk  No support for 32-Bit Matlab on Linux and Windows anymore for 3.0.12.
-%              Clarify there's also no support for < OSX 10.8 anymore.
-% 10/04/15 mk  Compatibility fixes for Octave-4, cosmetic cleanups.
-% 10/28/15 mk  32-Bit Octave-4 support for MS-Windows reestablished.
-% 04/01/16 mk  64-Bit Octave-4 support for MS-Windows established.
-
-% Flush all MEX files: This is needed at least on M$-Windows for SVN to
-% work if Screen et al. are still loaded.
 targetDirectory = '/home/exp/toolbox';
 flavor = 'beta';
-
+% Flush all MEX files: This is needed at least on M$-Windows for SVN to
+% work if Screen et al. are still loaded.
 clear mex
 
 % Check OS
@@ -366,13 +72,7 @@ fprintf('Requested location for the Psychtoolbox folder is inside: %s\n',targetd
 fprintf('\n');
 
 % Check for alternative install location of Subversion:
-if IsWin
-    % Search for Windows executable in path:
-    svnpath = which('svn.exe');
-else
-    % Search for Unix executable in path:
-    svnpath = which('svn.');
-end
+svnpath = which('svn.');
 
 % Found one?
 if ~isempty(svnpath)
@@ -452,7 +152,7 @@ if err
                  'Please ask a user with administrator privileges to enable \n'...
                  'write by everyone for that file.\n\n']);
     end
-    
+
     fprintf(['Once "savepath" works (no error message), run ' mfilename ' again.\n']);
     fprintf('Alternatively you can choose to continue with installation, but then you will have\n');
     fprintf('to resolve this permission isssue later and add the path to the Psychtoolbox manually.\n\n');
@@ -526,7 +226,7 @@ while (exist('Psychtoolbox','dir') || exist(fullfile(targetdirectory,'Psychtoolb
     warning('off','MATLAB:rmpath:DirNotFound');
     rmpath(pp);
     warning('on','MATLAB:rmpath:DirNotFound');
-    
+
     if exist('savepath')
        savepath;
     else
@@ -675,7 +375,7 @@ if err
     fprintf('You will either need to fix this manually via use of the path-browser (Menu: File -> Set Path),\n');
     fprintf('or by manual invocation of the savepath command (See help savepath). The third option is, of course,\n');
     fprintf('to add the path to the Psychtoolbox folder and all of its subfolders whenever you restart MATLAB / OCTAVE.\n\n\n');
-else 
+else
     fprintf('Success.\n\n');
 end
 
