@@ -33,7 +33,9 @@ rm -rf ~/Public
 rm -rf ~/Templates
 rm -rf ~/Videos
 rm -rf ~/Music
-mkdir ~/experiment
+
+# download experiment
+git clone https://github.com/aforren1/finger-5
 
 # get a modified version that won't ask permission
 wget https://raw.githubusercontent.com/aforren1/rasppi-exp/master/ModifiedDownloadPsychtoolbox.m
@@ -43,6 +45,3 @@ mkdir ~/toolbox # until I figure out permissions
 octave ModifiedDownloadPsychtoolbox.m
 
 # restart...
-
-# download experiment
-git clone https://github.com/aforren1/finger-5
