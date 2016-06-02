@@ -3,6 +3,12 @@
 # note that you still need to enable opengl manually, as well as
 # download this manually via `wget ...`
 
+# also, add user exp as super user
+# su 
+# adduser exp sudo 
+# exit
+# (log out and in again)
+
 # basic update
 sudo apt-get -y --force-yes update
 sudo apt-get -y --force-yes upgrade
@@ -21,4 +27,5 @@ cd ..
 
 # get a modified version that won't ask permission
 wget https://raw.githubusercontent.com/aforren1/rasppi-exp/master/DownloadPsychtoolbox.m
-
+mkdir toolbox # until I figure out permissions
+# use octave from command line
