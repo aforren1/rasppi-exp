@@ -1,4 +1,4 @@
-function DownloadPsychtoolbox(targetdirectory, flavor, targetRevision)
+function DownloadPsychtoolbox
 % DownloadPsychtoolbox([targetdirectory][, flavor][, targetRevision])
 %
 % This script downloads the latest GNU/Linux, Mac OSX, or MS-Windows
@@ -298,6 +298,9 @@ function DownloadPsychtoolbox(targetdirectory, flavor, targetRevision)
 
 % Flush all MEX files: This is needed at least on M$-Windows for SVN to
 % work if Screen et al. are still loaded.
+targetDirectory = '/home/exp/toolbox';
+flavor = 'beta';
+
 clear mex
 
 % Check OS

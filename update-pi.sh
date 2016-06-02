@@ -10,12 +10,12 @@ sudo apt-get -y --force-yes upgrade
 # download octave, ptb dependencies
 sudo apt-get install -y git libportaudio-ocaml-dev subversion freeglut3 freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev
 
-sudo apt-get build-dep octave
+sudo apt-get build-dep -y octave
 wget ftp://ftp.gnu.org/gnu/octave/octave-4.0.1.tar.gz
 tar xf octave-4.0.1.tar.gz
 cd octave-4.0.1/
-./configure
-make 
+sudo ./configure
+sudo make 
 sudo make install
 cd ..
 
