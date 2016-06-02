@@ -453,7 +453,7 @@ if err
     fprintf(['Once "savepath" works (no error message), run ' mfilename ' again.\n']);
     fprintf('Alternatively you can choose to continue with installation, but then you will have\n');
     fprintf('to resolve this permission isssue later and add the path to the Psychtoolbox manually.\n\n');
-    answer=input('Do you want to continue the installation despite the failure of SAVEPATH (yes or no)? ','s');
+    answer='no';
     if ~strcmpi(answer,'yes') && ~strcmpi(answer,'y')
         fprintf('\n\n');
         error('SAVEPATH failed. Please get an administrator to allow everyone to write pathdef.m.');
@@ -532,7 +532,7 @@ while (exist('Psychtoolbox','dir') || exist(fullfile(targetdirectory,'Psychtoolb
 
     fprintf('Success.\n');
 
-    answer=input('Shall I delete the old Psychtoolbox folder and all its contents \n(recommended in most cases), (yes or no)? ','s');
+    answer='yes';
     if strcmpi(answer,'yes') || strcmpi(answer,'y')
         skipdelete = 0;
         fprintf('Now we delete "Psychtoolbox" itself.\n');
@@ -564,7 +564,7 @@ while any(regexp(path,searchpattern))
     fprintf('Your old Psychtoolbox appears in the MATLAB / OCTAVE path:\n');
     paths=regexp(path,['[^' pathsep ']*' pathsep],'match');
     fprintf('Your old Psychtoolbox appears %d times in the MATLAB / OCTAVE path.\n',length(paths));
-    answer=input('Before you decide to delete the paths, do you want to see them (yes or no)? ','s');
+    answer='no';
     if ~strcmpi(answer,'yes') && ~strcmpi(answer,'y')
         fprintf('You didn''t say "yes", so I''m taking it as no.\n');
     else
@@ -575,7 +575,7 @@ while any(regexp(path,searchpattern))
             end
         end
     end
-    answer=input('Shall I delete all those instances from the MATLAB / OCTAVE path (yes or no)? ','s');
+    answer='yes';
     if ~strcmpi(answer,'yes') && ~strcmpi(answer,'y')
         fprintf('You didn''t say yes, so I cannot proceed.\n');
         fprintf('Please use the MATLAB "File:Set Path" command to remove all instances of "Psychtoolbox" from the path.\n');
