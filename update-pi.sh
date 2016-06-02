@@ -41,3 +41,8 @@ mkdir ~/toolbox # until I figure out permissions
 
 # use octave from command line
 octave ModifiedDownloadPsychtoolbox.m
+
+# restart...
+
+# download experiment
+git clone https://github.com/aforren1/finger-5
