@@ -3,8 +3,10 @@ function ModifiedDownloadPsychtoolbox
 %
 % This is a shorter version of DownloadPsychtoolbox, with options pre-selected.
 
-targetDirectory = '/home/exp/toolbox';
+targetDirectory = '/home/pi/toolbox';
 flavor = 'beta';
+targetRevision = '';
+
 % Flush all MEX files: This is needed at least on M$-Windows for SVN to
 % work if Screen et al. are still loaded.
 clear mex
@@ -13,10 +15,6 @@ clear mex
 IsWin = ~isempty(strfind(computer, 'PCWIN')) || ~isempty(strfind(computer, '-w64-mingw32'));
 IsOSX = ~isempty(strfind(computer, 'MAC')) || ~isempty(strfind(computer, 'apple-darwin'));
 IsLinux = strcmp(computer,'GLNX86') || strcmp(computer,'GLNXA64') || ~isempty(strfind(computer, 'linux-gnu'));
-
-if nargin < 1
-    targetdirectory = [];
-end
 
 if isempty(targetdirectory)
     if IsOSX
@@ -39,10 +37,6 @@ end
 % Hard-Code downloadmethod to zero aka https protocol:
 downloadmethod = 0;
 
-if nargin < 3
-    targetRevision = [];
-end
-
 if isempty(targetRevision)
     targetRevision = '';
 else
@@ -51,9 +45,6 @@ else
 end
 
 % Set flavor defaults and synonyms:
-if nargin < 2
-    flavor = [];
-end
 
 if isempty(flavor)
     flavor = 'beta';
