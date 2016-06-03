@@ -3,14 +3,7 @@
 # note that you still need to enable opengl manually, as well as
 # download this manually via
 # wget https://raw.githubusercontent.com/aforren1/rasppi-exp/master/update-pi.sh
-
-# also, add user exp as super user (don't know if raspbian takes care of this,
-# debian didn't)
-
-# su
-# adduser exp sudo
-# exit
-# (log out and in again)
+# also, make sure nonfree is uncommented in /etc/apt/sources.list, or the octave dependencies won't be grabbed
 
 # basic update
 sudo apt-get -y --force-yes update
