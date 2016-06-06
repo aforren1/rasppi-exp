@@ -7,9 +7,12 @@
 
 # make a swap space? Might help (only if we do compilation of octave though)
 sudo dd if=/dev/zero of=/mnt/1GB.swap bs=1024 count=1048576
+chmod 600 /mnt/1GB.swap
 sudo mkswap /mnt/1GB.swap
 sudo swapon /mnt/1GB.swap
-sudo printf '%s\n' '/mnt/1GB.swap  none  swap  sw 0  0' >> /etc/fstab
+# didn't work
+#sudo printf '%s\n' '/mnt/1GB.swap  none  swap  sw 0  0' >> /etc/fstab
+# reboot here?
 
 # basic update
 # add the unstable debian distro plus key
@@ -21,9 +24,9 @@ sudo apt-get -y --force-yes update
 sudo apt-get -y --force-yes upgrade
 
 # download octave, ptb dependencies
-sudo apt-get install -y git portaudio19-dev libportaudio-ocaml-dev subversion freeglut3 freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev
+sudo apt-get install -y --force-yes git portaudio19-dev libportaudio-ocaml-dev subversion freeglut3 freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev
 
-sudo apt-get install octave liboctave-dev
+sudo apt-get install -y octave liboctave-dev
 # get a modified version that won't ask permission
 wget https://raw.githubusercontent.com/aforren1/rasppi-exp/master/ModifiedDownloadPsychtoolbox.m
 mkdir ~/toolbox # until I figure out permissions
