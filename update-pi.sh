@@ -8,6 +8,7 @@
 # make a swap space?
 
 # basic update
+# add the unstable debian distro plus key
 sudo apt-get -y --force-yes update
 sudo apt-get -y --force-yes upgrade
 

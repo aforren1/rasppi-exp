@@ -3,7 +3,7 @@ function ModifiedDownloadPsychtoolbox
 %
 % This is a shorter version of DownloadPsychtoolbox, with options pre-selected.
 
-targetDirectory = '/home/pi/toolbox';
+targetdirectory = '/home/pi/toolbox';
 flavor = 'beta';
 targetRevision = '';
 
