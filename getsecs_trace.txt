@@ -1,0 +1,19 @@
+gdb --args /usr/bin/octave --no-gui --persist --eval "GetSecs"
+
+run:
+...
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x690d23b0 (LWP 6623)]
+0x75528000 in std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&) ()
+   from /usr/lib/arm-linux-gnueabihf/libstdc++.so.6
+
+bt:
+#0  0x75528000 in std::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::string const&) ()
+   from /usr/lib/arm-linux-gnueabihf/libstdc++.so.6
+#1  0x767007f0 in std::_Rb_tree<std::string, std::pair<std::string const, octave_value>, std::_Select1st<std::pair<std::string const, octave_value> >, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > >::_M_copy(std::_Rb_tree_node<std::pair<std::string const, octave_value> > const*, std::_Rb_tree_node<std::pair<std::string const, octave_value> >*) ()
+   from /usr/lib/arm-linux-gnueabihf/liboctinterp.so.3
+#2  0x67bbe5c4 in std::_Rb_tree<std::string, std::pair<std::string const, std::map<std::string, octave_value, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > > >, std::_Select1st<std::pair<std::string const, std::map<std::string, octave_value, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > > > >, std::less<std::string>, std::allocator<std::pair<std::string const, std::map<std::string, octave_value, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > > > > >::_M_copy(std::_Rb_tree_node<std::pair<std::string const, std::map<std::string, octave_value, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > > > > const*, std::_Rb_tree_node<std::pair<std::string const, std::map<std::string, octave_value, std::less<std::string>, std::allocator<std::pair<std::string const, octave_value> > > > >*) ()
+   from /usr/lib/arm-linux-gnueabihf/liboctinterp.so.2
+#3  0x672f69d0 in ?? () from /usr/lib/arm-linux-gnueabihf/liboctinterp.so.2
+---Type <return> to continue, or q <return> to quit---
+Backtrace stopped: previous frame identical to this frame (corrupt stack?)
