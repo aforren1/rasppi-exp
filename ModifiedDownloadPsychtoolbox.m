@@ -317,7 +317,7 @@ end
 % Choose initial download method. Defaults to zero, ie. https protocol:
 if downloadmethod < 1
     % HTTPS:
-    checkoutcommand=[svnpath 'svn checkout ' targetRevision ' https://github.com/kleinerm/Psychtoolbox-3' dflavor '/Psychtoolbox/ ' pt];
+    checkoutcommand=[svnpath 'svn checkout ' targetRevision ' https://github.com/kleinerm/Psychtoolbox-3/' dflavor '/Psychtoolbox/ ' pt];
 else
     % HTTP: This is unsupported by GitHub - just left as a reference for now.
     checkoutcommand=[svnpath 'svn checkout ' targetRevision ' http://github.com/Psychtoolbox-3/Psychtoolbox-3/' dflavor '/Psychtoolbox/ ' pt];
