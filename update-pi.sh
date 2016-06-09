@@ -17,7 +17,12 @@ sudo apt-get install -y octave liboctave-dev
 
 # try a newer version of octave (~4.0.2)
 #echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
-#sudo apt-get install debian-keyring
+#sudo aptitude install debian-keyring debian-archive-keyring
+#gpg --keyserver pgpkeys.mit.edu --recv-key 46925553      
+#gpg -a --export 46925553 | sudo apt-key add -
+#gpg --keyserver pgpkeys.mit.edu --recv-key  2B90D010
+#gpg -a --export 2B90D010 | sudo apt-key add -
+#sudo apt-get update
 #sudo apt-get -s install -t jessie-backports octave
 
 # if compiling octave, try making a swap space (I got one error that
@@ -37,5 +42,8 @@ sudo apt-get install -y octave liboctave-dev
 #cd ~
 
 # octave --no-gui
-# DownloadPsychtoolbox('~/toolbox', 'beta');
-sudo mv ~/toolbox/Psychtoolbox/PsychContributed/ArmArch/libwaffle-1.so.0.2.75_glxegl /usr/lib/libwaffle-1.so
+# DownloadPsychtoolbox('/home/pi/toolbox', 'beta');
+
+# below is probably unnecessary -- it looks like the PTB folks don't use waffle anymore
+# for raspberry pi
+#sudo mv ~/toolbox/Psychtoolbox/PsychContributed/ArmArch/libwaffle-1.so.0.2.75_glxegl /usr/lib/libwaffle-1.so.0
