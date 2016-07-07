@@ -15,9 +15,10 @@ sudo apt-get -y --force-yes update
 sudo apt-get -y --force-yes upgrade
 
 # download ptb dependencies and octave (probably some redundancies)
-sudo apt-get install -y --force-yes git portaudio19-dev subversion freeglut3 freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev libgl1-mesa-dri octave liboctave-dev
+sudo apt-get install -y --force-yes git portaudio19-dev subversion freeglut3 freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev libgl1-mesa-dri mesa-demos octave liboctave-dev
 
 # turn on opengl from raspi-config, bump up video RAM to 256, and restart
+# check that opengl is working with `glxgears` (from mesa-demos)
 
 # octave --no-gui
 # DownloadPsychtoolbox('/home/pi/toolbox', 'beta');
