@@ -1,5 +1,4 @@
-## Contains script and/or instructions for downloading all necessary components to
-## a new raspbian image
+## Contains instructions for downloading all necessary components to a new raspbian image
 
 A few observations so far:
 
