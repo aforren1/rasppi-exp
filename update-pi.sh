@@ -15,7 +15,7 @@ sudo apt-get update
 sudo apt-get -y --force-yes upgrade
 
 # download ptb dependencies and octave (probably some redundancies)
-sudo apt-get install -y --force-yes git portaudio19-dev subversion freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev libgl1-mesa-dri octave liboctave-dev
+sudo apt-get install -y --force-yes portaudio19-dev subversion freeglut3-dev rhythmbox libusb-1.0 libdc1394-22-dev libgl1-mesa-dri octave liboctave-dev mesa-utils
 # clean up accumulated waste
 sudo apt-get autoremove -y
 
