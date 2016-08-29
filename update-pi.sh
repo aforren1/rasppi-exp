@@ -4,8 +4,8 @@ mkdir ~/toolbox
 wget https://raw.githubusercontent.com/Psychtoolbox-3/Psychtoolbox-3/master/Psychtoolbox/DownloadPsychtoolbox.m
 
 echo "deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi" | sudo tee -a /etc/apt/sources.list
-echo "deb http://us.debian.org/debian stretch main contrib non-free" | sudo tee -a /etc/apt/sources.list
-echo "deb-src http://us.debian.org/debian stretch main contrib non-free" | sudo tee -a /etc/apt/sources.list
+echo "deb http://httpredir.debian.org/debian stretch main contrib non-free" | sudo tee -a /etc/apt/sources.list
+echo "deb-src http://httpredir.debian.org/debian stretch main contrib non-free" | sudo tee -a /etc/apt/sources.list
 sudo aptitude -y install debian-keyring debian-archive-keyring
 gpg --keyserver pgpkeys.mit.edu --recv-key 46925553
 gpg -a --export 46925553 | sudo apt-key add -
